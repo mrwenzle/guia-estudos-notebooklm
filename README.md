@@ -40,13 +40,16 @@ Para garantir respostas estruturadas, padronizadas nas convenções da Microsoft
 | :--- | :--- | :--- | :--- |
 | **Explication de LINQ** | *"Me explica o que é LINQ e como usar."* | A resposta veio genérica, sem relação explícita com o desempenho e sem exemplos modernos de C#. | Adicionado papel (*C# Mentor Lab*), instrução de uso exclusivo das fontes do caderno e restrição para comparar Syntax vs Method Syntax. |
 | **Review de Código** | *"Analise meu código C#."* | A IA apenas disse que o código estava bom, sem apontar boas práticas ou sugerir refatoração. | Criado o prompt `03-code-review.md` exigindo análise por critérios (POO, Clareza, Performance e Versão Refatorada). |
-
+| **Teste de Prompt (LINQ e Performance)** | "Atue como o C# Mentor Lab. Explique LINQ, Sintaxe de Método vs Consulta e performance." | A resposta foi excelente tecnicamente, mas a IA omitiu um bloco de código no exemplo C e esqueceu de gerar o "Desafio Ativo" exigido no System Prompt. | Ajuste de Prompt: Reforcei a instrução adicionando no final: "Certifique-se de preencher todos os blocos de código e, OBRIGATORIAMENTE, finalize com o Desafio Ativo da Regra 4". |
 ---
 
 ## 📖 Miniguia de Estudos
 
-### 📝 Resumos Estruturados
-*(Apresentação dos principais conceitos consolidados pelo mentor durante as sessões de estudo: POO, LINQ, Async/Await, Generics, etc.)*
+### 📝 Resumo Estruturado: Boas Práticas de LINQ e Performance
+1. **Deferred Execution (Execução Adiada):** Consultas LINQ não são processadas na hora da declaração. Evite usar `.ToList()` ou `.ToArray()` antes da hora para economizar alocações de memória.
+2. **IEnumerable vs IQueryable:** Use `IEnumerable` para coleções já em memória. Use `IQueryable` para consultas ao banco de dados, para que o filtro seja traduzido para SQL em vez de puxar toda a tabela para a memória.
+3. **Avaliação de Variáveis no Loop:** Avalie propriedades dinâmicas (ex: `DateTime.Today`) **antes** da query LINQ e passe o resultado em uma variável, evitando recálculos desnecessários durante a iteração.
+4. **Operadores Eficientes:** Use `TakeWhile` no lugar de `Where` em listas ordenadas para evitar varreduras completas desnecessárias, e prefira `First()` a `Single()` caso não precise validar a unicidade de registros em tempo de execução.
 
 ### 📕 Glossário Técnico C#
 - **CLR (Common Language Runtime):** Ambiente de execução virtual do .NET.
